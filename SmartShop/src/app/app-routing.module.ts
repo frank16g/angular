@@ -10,6 +10,9 @@ import {RepartidorPedidosRealizadosComponent} from './components/repartidor-pedi
 import { AdminHomeComponent} from './components/admin-home/admin-home.component';
 import {AdminRepartidoresComponent} from './components/admin-repartidores/admin-repartidores.component'
 import { AdminCrearRepartidorComponent} from '../app/components/admin-crear-repartidor/admin-crear-repartidor.component';
+import { ProductsComponent } from './components/products/products.component';
+import { ClientesListarProductosComponent } from './components/clientes-listar-productos/clientes-listar-productos.component'
+import { AdminEditarProductoComponent} from './components/admin-editar-producto/admin-editar-producto.component';
 import { from } from 'rxjs';
 import { AdminEditarRepartidorComponent} from './components/admin-editar-repartidor/admin-editar-repartidor.component'
 
@@ -27,8 +30,8 @@ const routes: Routes = [
   },
   {
     path: 'cliente',
-     canActivate:[CheckLoginGuard],
-     component: PedidosComponent
+    canActivate:[CheckLoginGuard],
+    component: PedidosComponent
   },
   {
     path: 'pedidosRealizados',
@@ -64,6 +67,18 @@ const routes: Routes = [
   {
     path:'editar-repartidor/:id',
     component: AdminEditarRepartidorComponent
+  },
+  {
+    path: 'admin-CrearProducto',
+    component:ProductsComponent
+  },
+   {
+     path: 'cliente-ListarProductos',
+     component:ClientesListarProductosComponent
+   },
+   {
+     path: 'editar-producto/:id',
+     component: AdminEditarProductoComponent
   }
 
 ];

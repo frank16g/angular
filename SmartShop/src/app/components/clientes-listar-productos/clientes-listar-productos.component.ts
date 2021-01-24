@@ -12,26 +12,34 @@ export class ClientesListarProductosComponent implements OnInit {
     private firebaseServiceService: FirebaseServiceService
   ) { }
 
-  collectionProductos = [];
+  collectionProductos = []; //Lista de todos los Productos
 
-  ngOnInit(): void {
-    
+  ngOnInit(): void {    
+    this.cargarProductos();
+  }
+
+  // Metodo para obtener todos los Productos
+  cargarProductos(){
     this.firebaseServiceService.getProductos().subscribe(resp => {
       this.collectionProductos = resp.map((u: any) => {
-        // this.collectionProductos.push(u);
-        return {
-          categoria: u.payload.doc.data().categoria,
-          imagen: u.payload.doc.data().imagen,
-          iva: u.payload.doc.data().iva,
-          nombre: u.payload.doc.data().nombre,
-          precio: u.payload.doc.data().precio,
-        };
+          return {
+            id: u.payload.doc.id,
+            categoria: u.payload.doc.data().categoria,
+            imagen: u.payload.doc.data().imagen,
+            nombre: u.payload.doc.data().nombre,
+            precio: u.payload.doc.data().precio,
+          };
       });
+      console.log(this.collectionProductos);
     },
       error => {
         console.error(error);
       }
     );
+  }
+
+  // Meetodo-boton Agregar Al Carrito 
+  AgregarAlCarriro(Producto){
     
   }
 

@@ -1,58 +1,53 @@
 <app-navbar-admin></app-navbar-admin>
-<div class="container">
-    <div class="container-xs">
-        <div class="row">
-            <h1>Crear Producto</h1>
-        </div>
-        <div class="form-group">
-
-            <label for="website">Categoria:</label>
-            <select class="form-control" (change)="obtenerCategoria($event)" >
-                <option disabled>Categorias</option>
-                <option *ngFor="let c of categoria" >{{c.tipo}}</option>
-            </select>
-            <!-- <input type="text" class="form-control"  placeholder="Caregoria"> -->
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" [(ngModel)]="pNombre" placeholder="Nombre">
-        </div>
-        <div class="form-group">
-            <input type="number" class="form-control" [(ngModel)]="pPrecio" placeholder="Precio">
-        </div>
-        <div class="form-group">
-            <input type="file" accept="image/x-png,image/gif,image/jpeg" (change)="obtenerImagen($event)">
-            <input #imageProduct type="hidden" [value]="urlImage | async">
-            <!-- <input type="text" class="form-control" [(ngModel)]="pImagen" placeholder="Imagen"> -->
-        </div>
-       
-        <div class="form-group">
-            <button class="btn btn-primary" (click)="crearProducto()">Crear Producto</button>
-        </div>
-    </div>
+<div class="container" id="p">
     <div class="row p-2">
         <div class="col-md-12 p-2 justify-content-center">
-            <h1>Listado Productos</h1>
+            <div>
+                <h1>Listado Productos</h1>
+                <button class="btn btn-primary" routerLink="/admin-CrearProducto">Crear Producto</button>
+            </div>
+            <div>
+                <label for="website">Buscar producto por Categoria:</label>
+                <select class="form-control" (change)="obtenerCategoriaBuscar($event)" style="width: 200px;">
+                    <option>Todas</option>
+                    <option *ngFor="let c of categoria">{{c.tipo}}</option>
+                </select>
+            </div>
         </div>
-        <div class="col-md-3" *ngFor="let item of producto">
-            <div class="card" *ngIf="!item.editar; else  elseblock">
+        <div class="col-md-3" *ngFor="let item of arregloProductoPorCategoria; let i = index">
+            <div class="card" *ngIf="!item['editar']">
                 <div class="card-body">
                     <div class="card-title">
-                        nombre: {{item.nombre}}
+                        Categoría: {{item.categoria}}
+                    </div>
+                    <div class="card-title">
+                        Nombre: {{item.nombre}}
                     </div>
                     <div class="card-subtitle">
-                       precio: {{item.precio}}
+                        Precio: {{item.precio}}
                     </div>
                     <div class="card-text">
-                       Imagen: <img src="{{item.imagen}}">
+                        Imagen: <img src="{{item.imagen}}">
                     </div>
                     <div>
-                        <button class="btn btn-primary" (click)="EditarProducto(item)"> Editar</button>
+                        <button class="btn btn-primary" [routerLink]="['/editar-producto',item.id]"> Editar</button>
                         <button class="btn btn-danger" (click)="EliminarProducto(item.id)">Eliminar</button>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<style>
+    #p {
+        margin-top: 90px;
+    }
+</style>
+<app-footer></app-footer>
 
-            <ng-template #elseblock>
+<!-- 
+
+    <ng-template #elseblock>
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title">
@@ -61,24 +56,30 @@
                         <div class="row">
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    Categoria: 
+                                    Categoria:
                                     <label for="website">Categoria:</label>
-                                    <select class="form-control" (change)="obtenerCategoria($event)" >
-                                        <option disabled>Categorias</option>
-                                        <option *ngFor="let c of categoria" >{{c.tipo}}</option>
+                                    <select class="form-control" (change)="obtenerCategoriaEdit($event)">
+                                        <option>{{item.editCategoria}}</option>
+                                        <option *ngFor="let c of categoria">
+                                            {{c.tipo}}
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="col-md-12">
-                                    Nombre: 
+                                    Nombre:
                                     <input type="text" [(ngModel)]="item.editnombre" class="form-control">
                                 </div>
                                 <div class="col-md-12">
-                                    Precio: 
-                                    <input type="text" [(ngModel)]="item.editPrecio" class="form-control" >
+                                    Precio:
+                                    <input type="text" [(ngModel)]="item.editPrecio" class="form-control">
                                 </div>
-                                <div class="col-md-12">
-                                    Imagen:
-                                    <input type="file" accept="image/x-png,image/gif,image/jpeg" (change)="obtenerImagen($event)">
+                                <div class="card-text">
+                                    Imagen Actual: <img src="{{item.editImagen}}">
+                                </div>
+                               <div class="col-md-6">
+                                    Subir nueva Imagen:
+                                    <input type="file" accept="image/x-png,image/gif,image/jpeg"
+                                        (change)="obtenerImagen($event)" onclick="this.value = null" style="width:80px">
                                     <input #imageProduct type="hidden" [value]="urlImage | async">
                                 </div>
                             </div>
@@ -90,8 +91,4 @@
                     </div>
                 </div>
             </ng-template>
-
-        </div>
-    </div>
-</div>
-<app-footer></app-footer>
+ -->

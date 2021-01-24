@@ -1,27 +1,43 @@
-<div class="container">
-    <div *ngFor="let producto of collectionProductos">
-        <div class="p">
-            <div class="" id="">
-                <h2 class="page-header">{{producto.nombre}}</h2>
-            </div>
-            <div class="product-block">
-                <div class="bg-image hover-zoom">
-                    <img class="w-100"
-                        src=""
-                        alt="Wacom Bamboo Tablet" />
-                </div>
-                <div class="caption">
-                    <h5></h5>
-                    <div class="price-mob">
-                        {{producto.precio}}
+<app-navbar></app-navbar>
+<div class="container" id="p">
+    <div class="row p-2">
+        <div class="col-md-12 p-2 justify-content-center">
+            <h1>Listado Productos</h1>
+        </div>
+        <div class="col-md-3" *ngFor="let item of collectionProductos">
+            <div class="card" id="demo">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h3> Categoria:</h3>
+                        <h5> {{item.categoria}}</h5>
                     </div>
-                    <div class="clearfix"></div>
-                    <div>
-                        <button type="button" class="btn btn-secondary btn-sm">Agregar
-                            Produco</button>
+                    <div class="card-title">
+                        <h4> Nombre:</h4>
+                        <h5> {{item.nombre}}</h5>
+                    </div>
+                    <div class="card-subtitle">
+                        <h4> Precio:</h4>
+                        <h5> {{item.precio}}</h5>
+                    </div>
+                    <div class="card-text">
+                        Imagen: <img src="{{item.imagen}}" style="width: 200px;">
+                    </div>
+                    <div class="card-text">
+                        <button class="btn btn-primary" (click)="AgregarAlCarriro(item)">Agregar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<style>
+    #p {     
+        margin-top: 75px;
+    }
+
+    #demo {
+        -webkit-box-shadow: 8px 2px 21px 0px rgba(0, 0, 0, 0.63);
+        box-shadow: 8px 2px 21px 0px rgba(0, 0, 0, 0.63);
+    }
+</style>
+<app-footer></app-footer>
