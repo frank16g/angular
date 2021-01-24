@@ -1,20 +1,34 @@
-<div class="container">
+<app-navbar-admin></app-navbar-admin>
+<div class="container" id="p">
     <div class="row">
         <h1>Crear Producto</h1>
     </div>
     <div class="form-group">
-        <input type="text" class="form-control" [(ngModel)]="pCategoria" placeholder="Caregoria">
+        <label for="website">Categoria:</label>
+        <select class="form-control" (change)="obtenerCategoriaCreate($event)">
+            <option *ngFor="let c of categoria">{{c.tipo}}</option>
+        </select>
     </div>
     <div class="form-group">
-        <input type="text" class="form-control" [(ngModel)]="pNombre" placeholder="Nombre">
+        <input type="text" class="form-control" [(ngModel)]="pNombre" placeholder="Nombre" required>
     </div>
     <div class="form-group">
-        <input type="number" class="form-control" [(ngModel)]="pPrecio" placeholder="Precio">
+        <input type="number" class="form-control" [(ngModel)]="pPrecio" placeholder="Precio" required>
     </div>
     <div class="form-group">
-        <input type="text" class="form-control" [(ngModel)]="pImagen" placeholder="Imagen">
+        <input type="file" accept="image/x-png,image/gif,image/jpeg" (change)="obtenerImagen($event)" required>
+        <input #imageProduct type="hidden" [value]="urlImage | async">
     </div>
     <div class="form-group">
         <button class="btn btn-primary" (click)="crearProducto()">Crear Producto</button>
     </div>
+    <div class="form-group">
+        <button class="btn btn-success" routerLink="/admin-productos">Listado Producto</button>
+    </div>
 </div>
+<style>
+    #p {
+        margin-top: 90px;
+    }
+</style>
+<app-footer></app-footer>

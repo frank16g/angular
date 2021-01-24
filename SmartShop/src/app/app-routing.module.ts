@@ -9,7 +9,7 @@ import { RepartidorPedidosNuevosComponent} from './components/repartidor-pedidos
 import {RepartidorPedidosRealizadosComponent} from './components/repartidor-pedidos-realizados/repartidor-pedidos-realizados.component';
 import { AdminHomeComponent} from './components/admin-home/admin-home.component';
 import {AdminRepartidoresComponent} from './components/admin-repartidores/admin-repartidores.component'
-
+import { ProductsComponent } from './components/products/products.component'
 import { from } from 'rxjs';
 
 const routes: Routes = [
@@ -55,6 +55,10 @@ const routes: Routes = [
   {
     path: 'admin-productos',
     component:ProductsCrudComponent
+  },
+  {
+    path: 'admin-CrearProducto',
+    component:ProductsComponent
   }
 
 ];
