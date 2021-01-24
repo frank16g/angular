@@ -8,8 +8,10 @@ import { CheckLoginGuard } from './guards/check-login.guard';
 import { RepartidorPedidosNuevosComponent} from './components/repartidor-pedidos-nuevos/repartidor-pedidos-nuevos.component';
 import {RepartidorPedidosRealizadosComponent} from './components/repartidor-pedidos-realizados/repartidor-pedidos-realizados.component';
 import { AdminHomeComponent} from './components/admin-home/admin-home.component';
-import {AdminRepartidoresComponent} from './components/admin-repartidores/admin-repartidores.component'
-import { ProductsComponent } from './components/products/products.component'
+import {AdminRepartidoresComponent} from './components/admin-repartidores/admin-repartidores.component';
+import { ProductsComponent } from './components/products/products.component';
+import { ClientesListarProductosComponent } from './components/clientes-listar-productos/clientes-listar-productos.component'
+import { AdminEditarProductoComponent} from './components/admin-editar-producto/admin-editar-producto.component';
 import { from } from 'rxjs';
 
 const routes: Routes = [
@@ -26,8 +28,8 @@ const routes: Routes = [
   },
   {
     path: 'cliente',
-     canActivate:[CheckLoginGuard],
-     component: PedidosComponent
+    canActivate:[CheckLoginGuard],
+    component: PedidosComponent
   },
   {
     path: 'pedidosRealizados',
@@ -59,6 +61,14 @@ const routes: Routes = [
   {
     path: 'admin-CrearProducto',
     component:ProductsComponent
+  },
+   {
+     path: 'cliente-ListarProductos',
+     component:ClientesListarProductosComponent
+   },
+   {
+     path: 'editar-producto/:id',
+     component: AdminEditarProductoComponent
   }
 
 ];

@@ -55,7 +55,10 @@ export class FirebaseServiceService {
     getCategorias(){
       return this.firestore.collection('Categorias').snapshotChanges(); 
     }
-
+    // Metodo para Buscar un Producto por Id
+    getProductId(id:any){
+      return this.firestore.collection('Productos').doc(id).snapshotChanges();
+    }
 
 
 }

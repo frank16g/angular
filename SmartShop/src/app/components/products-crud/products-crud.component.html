@@ -2,38 +2,52 @@
 <div class="container" id="p">
     <div class="row p-2">
         <div class="col-md-12 p-2 justify-content-center">
-            <h1>Listado Productos</h1>
-            <button class="btn btn-primary" routerLink="/admin-CrearProducto">Crear Producto</button>
-        </div>
-        <div>
-            <label for="website">Categoria:</label>
-            <select class="form-control" (change)="obtenerCategoriaBuscar($event)">
-                <option >Todas</option>
-                <option *ngFor="let c of categoria">{{c.tipo}}</option>
-            </select>
+            <div>
+                <h1>Listado Productos</h1>
+                <button class="btn btn-primary" routerLink="/admin-CrearProducto">Crear Producto</button>
+            </div>
+            <div>
+                <label for="website">Buscar producto por Categoria:</label>
+                <select class="form-control" (change)="obtenerCategoriaBuscar($event)" style="width: 200px;">
+                    <option>Todas</option>
+                    <option *ngFor="let c of categoria">{{c.tipo}}</option>
+                </select>
+            </div>
         </div>
         <div class="col-md-3" *ngFor="let item of arregloProductoPorCategoria; let i = index">
-            <div class="card" *ngIf="!item['editar']; else  elseblock" >
+            <div class="card" *ngIf="!item['editar']">
                 <div class="card-body">
                     <div class="card-title">
-                        categoria: {{item.categoria}}
+                        Categoría: {{item.categoria}}
                     </div>
                     <div class="card-title">
-                        nombre: {{item.nombre}}
+                        Nombre: {{item.nombre}}
                     </div>
                     <div class="card-subtitle">
-                        precio: {{item.precio}}
+                        Precio: {{item.precio}}
                     </div>
                     <div class="card-text">
                         Imagen: <img src="{{item.imagen}}">
                     </div>
                     <div>
-                        <button class="btn btn-primary" (click)="EditarProducto(item)"> Editar</button>
+                        <button class="btn btn-primary" [routerLink]="['/editar-producto',item.id]"> Editar</button>
                         <button class="btn btn-danger" (click)="EliminarProducto(item.id)">Eliminar</button>
                     </div>
                 </div>
             </div>
-            <ng-template #elseblock>
+        </div>
+    </div>
+</div>
+<style>
+    #p {
+        margin-top: 90px;
+    }
+</style>
+<app-footer></app-footer>
+
+<!-- 
+
+    <ng-template #elseblock>
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title">
@@ -77,12 +91,4 @@
                     </div>
                 </div>
             </ng-template>
-        </div>
-    </div>
-</div>
-<style>
-    #p {
-        margin-top: 90px;
-    }
-</style>
-<app-footer></app-footer>
+ -->

@@ -131,7 +131,6 @@ a:number;
   }
 
   Editar2(ProductoEdit) {
-    
     console.log(this.inputImageProduct.nativeElement.value);
     let Producto = {};
     Producto['categoria'] = this.categoriaEditar;
@@ -152,9 +151,15 @@ a:number;
 
   // Eliminar Producto
   EliminarProducto(idProducto) {
-    this.arregloProductoPorCategoria.length = 0;
-    this.firebaseServiceService.deleteProducto(idProducto);
-    this.cargarProductoPorCategoria();
+    let r = confirm('¿Está seguro de eliminar este producto?');
+    if (r==true){
+      this.arregloProductoPorCategoria.length = 0;
+      this.firebaseServiceService.deleteProducto(idProducto);
+      this.cargarProductoPorCategoria();
+    }else{
+      this.cargarTodosLosProductos();
+      // this.cargarProductoPorCategoria();
+    }
   }
 
   // convertir la imagen a url 

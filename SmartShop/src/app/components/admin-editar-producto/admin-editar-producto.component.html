@@ -1,0 +1,59 @@
+<app-navbar-admin></app-navbar-admin>
+<div class="container" id="p">
+    <div class="row">
+        <h1>Editar Producto</h1>
+    </div>
+    <div *ngFor="let item of producto; let i = index">
+        <div *ngIf="i==0">
+            <table class="table">
+                <tr>
+                    <td style="width: 50%;">
+                        <div class="form-group">
+                            <label for="website">Categoria:</label>
+                            <select class="form-control" (change)="obtenerCategoriaEdit($event)">
+                                <option>
+                                    {{pCategoria}}
+                                </option>
+                                <option *ngFor="let c of categoria">
+                                    {{c.tipo}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            Nombre:
+                            <input type="text" class="form-control" [(ngModel)]="pNombre" placeholder="Nombre">
+                        </div>
+                        <div class="form-group">
+                            Precio:
+                            <input type="number" class="form-control" [(ngModel)]="pPrecio" placeholder="Precio">
+                        </div>
+                        <div class="form-group">
+                            <input type="file" accept="image/x-png,image/gif,image/jpeg"
+                                (change)="obtenerImagen($event)">
+                            <input #imageProduct type="hidden" [value]="urlImage | async">
+                        </div>
+                    </td>
+                    <td style="width: auto;">
+                        <div class="card-text">
+                            Imagen Actual: <img src="{{pImagen}}">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <button class="btn btn-primary" (click)="editarProducto(item.id)">Guardar</button>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success" routerLink="/admin-productos">Listado Producto</button>
+                    </div>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<style>
+    #p {
+        margin-top: 90px;
+    }
+</style>
+<app-footer></app-footer>
