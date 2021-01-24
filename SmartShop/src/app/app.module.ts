@@ -45,7 +45,7 @@ import { AdminEditarProductoComponent } from './components/admin-editar-producto
 
     NavbarLoginComponent,
     
-
+    AdminRepartidoresComponent,
     ProductsComponent,
     ProductsCrudComponent,
     RepartidorPedidosNuevosComponent,
