@@ -1,0 +1,27 @@
+<div class="container">
+    <div *ngFor="let producto of collectionProductos">
+        <div class="p">
+            <div class="" id="">
+                <h2 class="page-header">{{producto.nombre}}</h2>
+            </div>
+            <div class="product-block">
+                <div class="bg-image hover-zoom">
+                    <img class="w-100"
+                        src=""
+                        alt="Wacom Bamboo Tablet" />
+                </div>
+                <div class="caption">
+                    <h5></h5>
+                    <div class="price-mob">
+                        {{producto.precio}}
+                    </div>
+                    <div class="clearfix"></div>
+                    <div>
+                        <button type="button" class="btn btn-secondary btn-sm">Agregar
+                            Produco</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

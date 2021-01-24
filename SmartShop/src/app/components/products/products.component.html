@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="row">
+        <h1>Crear Producto</h1>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" [(ngModel)]="pCategoria" placeholder="Caregoria">
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" [(ngModel)]="pNombre" placeholder="Nombre">
+    </div>
+    <div class="form-group">
+        <input type="number" class="form-control" [(ngModel)]="pPrecio" placeholder="Precio">
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" [(ngModel)]="pImagen" placeholder="Imagen">
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" (click)="crearProducto()">Crear Producto</button>
+    </div>
+</div>
