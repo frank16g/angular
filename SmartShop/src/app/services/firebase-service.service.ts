@@ -12,6 +12,9 @@ export class FirebaseServiceService {
     getUsuarios(){
       return this.firestore.collection('Usuarios').snapshotChanges(); 
     }
+    getRepartidores(){
+      return this.firestore.collection('Repartidores').snapshotChanges(); 
+    }
     // Metodo para crear Usuario
     createUsuario(_email, _cedula, _apellido, _nombre, _lat, _lon, _telefono){
       return this.firestore.collection('Usuarios').add({
@@ -42,20 +45,35 @@ export class FirebaseServiceService {
     createProducto(_producto){
       return this.firestore.collection('Productos').add(_producto);
     }
+    crearRepartidor(_repartidor){
+      return this.firestore.collection('Repartidores').add(_repartidor);
+    }
     // Metodo para Actualizar Producto
     updateProducto(id: any,producto: any){
       console.log(producto);
       return this.firestore.collection('Productos').doc(id).update(producto);
     }
+    updateRepartidor(id: any,repartidor: any){
+      console.log(repartidor);
+      return this.firestore.collection('Repartidores').doc(id).update(repartidor);
+    }
     // Metodo para Eliminar Producto
     deleteProducto(id: any){
       return this.firestore.collection('Productos').doc(id).delete();
+    }
+    deleteRepartidor(id: any){
+      return this.firestore.collection('Repartidores').doc(id).delete();
     }
     // Metodo para obtener las Categorias de Pedidos
     getCategorias(){
       return this.firestore.collection('Categorias').snapshotChanges(); 
     }
 
+
+    getRepartidorId(id:any){
+       return this.firestore.collection('Repartidores').doc(id).snapshotChanges();
+    }
+    
 
 
 }

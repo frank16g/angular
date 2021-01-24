@@ -47,10 +47,11 @@ export class LoginComponent implements OnInit {
         this.collectionUsuarios.forEach(element =>{
           console.log(element)
           if(element.email == email){
+            console.log(element.tipo)
             if(element.tipo == "cliente"){
               this.router.navigate(['/cliente']); 
             }else{
-              this.router.navigate(['/repartidorPedidosNuevos']); 
+              this.router.navigate(['/repartidor']); 
             }
           }
         });

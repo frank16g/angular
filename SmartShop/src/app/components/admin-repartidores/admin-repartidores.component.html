@@ -1,2 +1,95 @@
 <app-navbar-admin></app-navbar-admin>
+<h1 id="titulo">Listado Repartidores</h1>
+<!-- <input type="text" class="form-control" name="filterPos" placeholder="Searh....." [(ngModel)]="filterPos"> -->
+
+
+<button type="button" class="btn btn-primary" routerLink="/admin-crear-repartidor" id="new">Nuevo Repartidor</button>
+<table class="table" id="tab">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Cedula</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Telefono</th>
+      <th scope="col">Direccion</th>
+      <th scope="col">Correo</th>
+      <th scope="col">Administrar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of repartidor">
+
+      <td>{{item.id}}</td>
+      <td>{{item.cedula}}</td>
+      <td>{{item.apellido}}</td>
+      <td>{{item.nombre}}</td>
+      <td>{{item.telefono}}</td>
+      <td>{{item.direccion}}</td>
+      <td>{{item.email}}</td>
+      <td>
+        <button class="btn btn-primary" [routerLink]="['/editar-repartidor',item.id]">Editar</button> 
+        <button class="btn btn-danger" (click)="EliminarRepartidor(item.id)">Eliminar</button>
+      </td>
+      <!-- </tr>
+    <tr *ngFor="let item of repartidor" #elseblock>
+      <td>{{item.id}}</td>
+      <td><input type="text" [(ngModel)]="item.edicedula" class="form-control"></td>
+      <td><input type="text" [(ngModel)]="item.ediapellido" class="form-control"></td>
+      <td><input type="text" [(ngModel)]="item.editnombre" class="form-control"></td>
+      <td><input type="text" [(ngModel)]="item.editelefono" class="form-control"></td>
+      <td><input type="text" [(ngModel)]="item.edidireccion" class="form-control"></td>
+      <td><input type="text" [(ngModel)]="item.ediemail" class="form-control"></td>
+      <td> <button class="btn btn-primary" (click)="Editar2(item)"> Guardar</button>
+        <button class="btn btn-danger" (click)="item.editar = false">Cancelar</button></td>
+    </tr> -->
+  </tbody>
+</table>
+
+<!-- Modal -->
+<ng-template #modalMensaje let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">
+          <span></span>
+      </h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+  </div>
+  <div class="modal-body">
+      <p> <span></span></p>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+
+  </div>
+</ng-template>   
+
+<style>
+  #tab {
+    margin-top: 20px;
+    width: 80%;
+    margin-left: 80px;
+  }
+
+  #titulo {
+    padding: 20px;
+    margin-top: 80px;
+    margin-left: 500px;
+  }
+
+  #new {
+    margin-left: 80px;
+  }
+
+  .backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+  }
+
+</style>
 <app-footer></app-footer>

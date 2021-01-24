@@ -1,0 +1,77 @@
+<app-navbar-admin></app-navbar-admin>
+<div class="container" id="btn">
+  <div class="form-group">
+    <div class="row">
+      <h1>Editar Repartidor</h1>
+    </div>
+    <!-- <div class="form-group">
+      <input type="text" class="form-control" [(ngModel)]="pID" placeholder="id" disabled>
+    </div> -->
+    <div class="form-group row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Cedula:</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" [(ngModel)]="pCedula" placeholder="Cedula" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Apellido:</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" [(ngModel)]="pApellido" placeholder="Apellido" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Nombre:</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" [(ngModel)]="pNombre" placeholder="Nombre" required>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Dirección:</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" [(ngModel)]="pDireccion" placeholder="Direccién" required>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Dirección:</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" [(ngModel)]="pTelefono" placeholder="Teléfono" required>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Dirección:</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" [(ngModel)]="pEmail" placeholder="Email" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary" id="button" (click)="EditarRepartidor(pID)">Editar Repartidor</button>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-success" id="button2" routerLink="/admin-repartidores">Listado Repartidor</button>
+  </div>
+</div>
+
+<style>
+  #button {
+    margin-top: 20px;
+    width: 200px;
+  }
+
+  #button2 {
+    margin-top: 20px;
+    width: 200px;
+  }
+
+  #btn {
+    margin-left: 250px;
+    width: 80%;
+    margin-top: 120px;
+  }
+
+  #titulo {
+    margin-top: 90px;
+    margin-left: 80px;
+  }
+
+</style>

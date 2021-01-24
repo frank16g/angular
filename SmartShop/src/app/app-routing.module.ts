@@ -9,8 +9,9 @@ import { RepartidorPedidosNuevosComponent} from './components/repartidor-pedidos
 import {RepartidorPedidosRealizadosComponent} from './components/repartidor-pedidos-realizados/repartidor-pedidos-realizados.component';
 import { AdminHomeComponent} from './components/admin-home/admin-home.component';
 import {AdminRepartidoresComponent} from './components/admin-repartidores/admin-repartidores.component'
-
+import { AdminCrearRepartidorComponent} from '../app/components/admin-crear-repartidor/admin-crear-repartidor.component';
 import { from } from 'rxjs';
+import { AdminEditarRepartidorComponent} from './components/admin-editar-repartidor/admin-editar-repartidor.component'
 
 const routes: Routes = [
   {path: 'login', loadChildren: () => import('./auth/login/login.module').then(m => m.LoginModule)}, 
@@ -40,7 +41,7 @@ const routes: Routes = [
     component:RepartidorPedidosNuevosComponent
   },
   {
-    path:'repartidorPedidosRealizados',
+    path:'repartidor',
     canActivate:[CheckLoginGuard],
     component:RepartidorPedidosRealizadosComponent
   },
@@ -55,6 +56,14 @@ const routes: Routes = [
   {
     path: 'admin-productos',
     component:ProductsCrudComponent
+  },
+  {
+    path:'admin-crear-repartidor',
+    component:AdminCrearRepartidorComponent
+  },
+  {
+    path:'editar-repartidor/:id',
+    component: AdminEditarRepartidorComponent
   }
 
 ];
