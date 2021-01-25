@@ -1,2 +1,47 @@
 <app-navbar-repartidores></app-navbar-repartidores>
-<app-footer></app-footer> 
+<div class="container" id="pedidos">
+    <h3>Pedidos Realizados por :</h3>
+    <div class="table-responsive">
+
+        <div class="container-fluid" id="">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr style="text-align: center;">
+                        <th scope="col">Numero Pedido</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Fecha del Pedido</th>
+                        <th scope="col">Ubicacion</th>
+                        <th scope="col">Aceptar</th>
+                    </tr>
+                </thead>
+                <tbody id="listado">
+                    <tr>
+                        <th>1</th>
+                        <th>Prueba</th>
+                        <th>01/01/2021</th>
+                        <th>Total</th>
+                        <th>
+                            <button type="button" class="btn btn-info btn-lg" 
+                            data-toggle="modal" data-target="#myModal">Ver Detalle</button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>2</th>
+                        <th>Prueb2</th>
+                        <th>01/01/2021</th>
+                        <th>Total</th>
+                        <th>
+                            <button type="button" class="btn btn-info btn-lg" 
+                            data-toggle="modal" data-target="#myModal">Ver Detalle</button>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<style>
+    #pedidos{
+        margin-top: 120px;
+    }
+</style>

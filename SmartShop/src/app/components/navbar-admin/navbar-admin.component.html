@@ -8,7 +8,7 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav text-uppercase ml-auto">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/admin" routerLinkActive="active">Estadisticas</a>
+            <a class="nav-link" routerLink="/admin" routerLinkActive="active">Estadísticas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/admin-productos" routerLinkActive="active">Productos</a>
@@ -17,9 +17,15 @@
             <a class="nav-link" routerLink="/admin-repartidores" routerLinkActive="active">Repartidores</a>
           </li>
           <li class="nav-item">
-            <button class="btn-primary" (click)= "logout()">Cerrar sesión</button>
+            <button class="btn btn-primary " id="btnSalir" (click)= "logout()">Cerrar sesión</button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+
+  <style>
+    #btnSalir{
+      padding-top: 5px;
+    }
+  </style>

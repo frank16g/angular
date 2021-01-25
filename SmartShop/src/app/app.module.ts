@@ -31,7 +31,7 @@ import { AdminCrearRepartidorComponent } from './components/admin-crear-repartid
 import { AdminEditarRepartidorComponent } from './components/admin-editar-repartidor/admin-editar-repartidor.component';
 import { AdminEditarProductoComponent } from './components/admin-editar-producto/admin-editar-producto.component';
 import { ClienteCantidadProductoComponent } from './components/cliente-cantidad-producto/cliente-cantidad-producto.component';
-
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -66,7 +66,7 @@ import { ClienteCantidadProductoComponent } from './components/cliente-cantidad-
 
     AngularFireModule.initializeApp(environment.firebase),
     HttpClientModule,
-
+    ChartsModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule

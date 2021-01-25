@@ -8,7 +8,7 @@
       <input type="text" class="form-control" [(ngModel)]="pID" placeholder="id" disabled>
     </div> -->
     <div class="form-group row">
-      <label for="staticEmail" class="col-sm-2 col-form-label">Cedula:</label>
+      <label for="staticEmail" class="col-sm-2 col-form-label">Cédula:</label>
       <div class="col-sm-6">
         <input type="text" class="form-control" [(ngModel)]="pCedula" placeholder="Cedula" required>
       </div>
@@ -33,19 +33,19 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="staticEmail" class="col-sm-2 col-form-label">Dirección:</label>
+    <label for="staticEmail" class="col-sm-2 col-form-label">Teléfono:</label>
     <div class="col-sm-6">
       <input type="text" class="form-control" [(ngModel)]="pTelefono" placeholder="Teléfono" required>
     </div>
   </div>
   <div class="form-group row">
-    <label for="staticEmail" class="col-sm-2 col-form-label">Dirección:</label>
+    <label for="staticEmail" class="col-sm-2 col-form-label">Correo:</label>
     <div class="col-sm-6">
       <input type="text" class="form-control" [(ngModel)]="pEmail" placeholder="Email" required>
     </div>
   </div>
   <div class="form-group">
-    <button class="btn btn-primary" id="button" (click)="EditarRepartidor(pID)">Editar Repartidor</button>
+    <button class="btn btn-primary" id="button" (click)="EditarRepartidor(pID)">Guardar</button>
   </div>
   <div class="form-group">
     <button class="btn btn-success" id="button2" routerLink="/admin-repartidores">Listado Repartidor</button>

@@ -15,7 +15,9 @@
     <div class="form-group">
         <input type="number" class="form-control" [(ngModel)]="pPrecio" placeholder="Precio" required>
     </div>
+
     <div class="form-group">
+        <label for="">Imagen del producto:</label><br>
         <input type="file" accept="image/x-png,image/gif,image/jpeg" (change)="obtenerImagen($event)" required>
         <input #imageProduct type="hidden" [value]="urlImage | async">
     </div>

@@ -15,6 +15,9 @@ export class FirebaseServiceService {
     getRepartidores(){
       return this.firestore.collection('Repartidores').snapshotChanges(); 
     }
+    getPedidos(){
+      return this.firestore.collection('Pedidos').snapshotChanges(); 
+    }
     // Metodo para crear Usuario
     createUsuario(_email, _cedula, _apellido, _nombre, _lat, _lon, _telefono){
       return this.firestore.collection('Usuarios').add({

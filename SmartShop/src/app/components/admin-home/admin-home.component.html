@@ -1,2 +1,42 @@
 <app-navbar-admin></app-navbar-admin>
+<div class="grafica" id="inicio">
+    <h3>Resumen General</h3>
+    <canvas baseChart 
+    [datasets]="barChartDatas"
+    [labels]="barChartLabelss"
+    [options]="barChartOptionss"
+    [colors]="lineChartColors" 
+    [plugins]="barChartPluginss"
+    [legend]="barChartLegends"
+    [chartType]="barChartTypes">
+  </canvas>
+</div>
+<br>
+<div class=" grafica " >
+    <h3>Cantidad Productos por Categoria</h3>
+    <canvas baseChart 
+    [datasets]="barChartData"
+    [labels]="barChartLabels"
+    [options]="barChartOptions"
+    [colors]="lineChartColors" 
+    [plugins]="barChartPlugins"
+    [legend]="barChartLegend"
+    [chartType]="barChartType">
+  </canvas>
+</div>
+
+
+<style>
+    .grafica{
+        width: 800px;
+        margin-left: 300px;
+    }
+    #inicio{
+        margin-top: 80px;
+    }
+    .siguiente{
+        margin-top: -50px;
+    
+    }
+</style>
 <app-footer></app-footer>
