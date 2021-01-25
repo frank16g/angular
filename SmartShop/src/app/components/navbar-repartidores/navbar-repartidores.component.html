@@ -10,13 +10,19 @@
             <a class="nav-link" routerLink="/repartidorPedidosNuevos" routerLinkActive="active">Pedido Nuevo</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/repartidorPedidosRealizados" routerLinkActive="active">Pedidos Realizados</a>
+            <a class="nav-link" routerLink="/repartidor" routerLinkActive="active">Pedidos Realizados</a>
           </li>
           <li class="nav-item">
-            <button class="btn-primary" (click)= "logout()">Cerrar sesión</button>
+            <button class=" btn btn-primary" id="btnSalir"(click)= "logout()">Cerrar sesión</button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+  <style>
+    #btnSalir{
+      padding-top: 5px;
+    }
+  </style>
+
   

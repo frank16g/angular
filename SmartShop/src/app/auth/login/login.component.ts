@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
             if(element.tipo == "cliente"){
               this.router.navigate(['/cliente']); 
             }else{
-              this.router.navigate(['/repartidor']); 
+              this.router.navigate(['/repartidorPedidosNuevos']); 
             }
           }
         });
