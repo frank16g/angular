@@ -30,6 +30,7 @@ import { AdminRepartidoresComponent } from './components/admin-repartidores/admi
 import { AdminCrearRepartidorComponent } from './components/admin-crear-repartidor/admin-crear-repartidor.component';
 import { AdminEditarRepartidorComponent } from './components/admin-editar-repartidor/admin-editar-repartidor.component';
 import { AdminEditarProductoComponent } from './components/admin-editar-producto/admin-editar-producto.component';
+import { ClienteCantidadProductoComponent } from './components/cliente-cantidad-producto/cliente-cantidad-producto.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { AdminEditarProductoComponent } from './components/admin-editar-producto
     NavbarAdminComponent,
     AdminCrearRepartidorComponent,
     AdminEditarRepartidorComponent,
-    AdminEditarProductoComponent
+    AdminEditarProductoComponent,
+    ClienteCantidadProductoComponent
 
   ],
   imports: [

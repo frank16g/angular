@@ -2,36 +2,78 @@
 <div class="container" id="p">
     <div class="row p-2">
         <div class="col-md-12 p-2 justify-content-center">
-            <h1>Listado Productos</h1>
+            <div style="float: left;">
+                <h1>Listado Productos</h1>
+                <div>
+                    <label for="website">Buscar producto por Categoria:</label>
+                    <select class="form-control"  (change)="obtenerCategoriaBuscar($event)" style="width: 200px;">
+                        <option>Todas</option>
+                        <option *ngFor="let c of categoria">{{c.tipo}}</option>
+                    </select>
+                </div>
+            </div>
+            <div style="float: right;">
+                <button>Carrito</button>
+            </div>
         </div>
-        <div class="col-md-3" *ngFor="let item of collectionProductos">
-            <div class="card" id="demo">
-                <div class="card-body">
-                    <div class="card-title">
-                        <h3> Categoria:</h3>
-                        <h5> {{item.categoria}}</h5>
+       
+        <div class="col-md-3" *ngFor="let item of arregloProductoPorCategoria let i = index">
+            <div *ngIf="!item.agregar; else elseblock">
+                <div class="card" style="width: 14rem;" id="demo">
+                    <img class="card-img-top" src="{{item.imagen}}" alt="{{item.nombre}}" style="height: 150px;">
+                    <div class="card-body">
+                        <strong>Nombre: </strong>
+                        <p class="card-text">{{item.nombre}}</p>
                     </div>
-                    <div class="card-title">
-                        <h4> Nombre:</h4>
-                        <h5> {{item.nombre}}</h5>
-                    </div>
-                    <div class="card-subtitle">
-                        <h4> Precio:</h4>
-                        <h5> {{item.precio}}</h5>
-                    </div>
-                    <div class="card-text">
-                        Imagen: <img src="{{item.imagen}}" style="width: 200px;">
-                    </div>
-                    <div class="card-text">
-                        <button class="btn btn-primary" (click)="AgregarAlCarriro(item)">Agregar</button>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong class="card-title">Categoria: </strong>
+                            <br>
+                            {{item.categoria}}
+                        </li>
+                        <li class="list-group-item"><strong>Precio: </strong> {{item.precio}}</li>  
+                    </ul>
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary" (click)="AgregarAlCarriro(item)" style="width: 100%;">
+                            Selecccionar
+                        </button>
                     </div>
                 </div>
             </div>
+            <ng-template #elseblock>
+                <div class="card" style="width: 14rem;" id="demo">
+                    <img class="card-img-top" src="{{item.imagen}}" alt="{{item.nombre}}" style="height: 150px;">
+                    <div class="card-body">
+                        <strong>Nombre: </strong>
+                        <p class="card-text">{{item.nombre}}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong class="card-title">Categoria:</strong><br>
+                            {{item.categoria}}
+                        </li>
+                        <li class="list-group-item"><strong>Precio: </strong>{{item.precio}}</li>  
+                        <li class="list-group-item"><strong>Cantidad: </strong>
+                            <input type="number" class="form-control" [[ngModel]]="Cantidad">
+                        </li>  
+                    </ul>
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary" style="margin-right: 10px;">
+                            Agregar
+                        </button>
+                        <button type="button" class="btn btn-danger" (click)="item.agregar=false">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+            
         </div>
     </div>
 </div>
+<!--  -->
 <style>
-    #p {     
+    #p {
         margin-top: 75px;
     }
 

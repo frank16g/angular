@@ -1,0 +1,52 @@
+<app-navbar></app-navbar>
+<div class="container" id="p">
+    <div class="row">
+        <h1>Agregar la Cantidad de Productos</h1>
+    </div>
+    <div *ngFor="let item of producto; let i = index">
+        <div *ngIf="i==0">
+            <table class="table">
+                <tr>
+                    <td style="width: 50%;">
+                        <div class="form-group">
+                            <input type="text" [(ngModel)]="idProducto" hidden>
+                            <label for="website">Categoria:</label>
+                            <input type="text" class="form-control" [(ngModel)]="pCategoria" disabled>
+                        </div>
+                        <div class="form-group">
+                            Nombre:
+                            <input type="text" class="form-control" [(ngModel)]="pNombre" disabled>
+                        </div>
+                        <div class="form-group">
+                            Precio:
+                            <input type="number" class="form-control" [(ngModel)]="pPrecio" disabled required>
+                        </div>
+                        <div class="form-group">
+                            Cantidad de Producto:
+                            <input type="number" class="form-control" [(ngModel)]="cantidadProducto">
+                        </div>
+                    </td>
+                    <td style="width: auto;">
+                        <div class="card-text">
+                            <img src="{{pImagen}}" style="width: 300px;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <button class="btn btn-primary" [routerLink]="['/pedidosRealizados',item.id,cantidadProducto]" (click)="EnviarDatosAlCarrito(idProducto,cantidadProducto)">Comprar</button>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success" routerLink="/cliente-ListarProductos">Listado Producto</button>
+                    </div>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<style>
+    #p {
+        margin-top: 90px;
+    }
+</style>
+<app-footer></app-footer>
