@@ -46,41 +46,44 @@
                             </td>
                         </tr>
                     </tbody>
-                   <tfoot>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>Total IVA: </td>
-                        <td >$ {{formateaValor(iva)}}</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>Subtotal: </td>
-                        <td>$ {{formateaValor(subtotal)}}</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>TOTAL: </td>
-                        <td>$ {{formateaValor(total)}}</td>
-                    </tr>
-                   </tfoot>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Total IVA: </td>
+                            <td>$ {{formateaValor(iva)}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Subtotal: </td>
+                            <td>$ {{formateaValor(subtotal)}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>TOTAL: </td>
+                            <td>$ {{formateaValor(total)}}</td>
+                        </tr>
+                    </tfoot>
                 </table>
+            </tr>
+            <tr>
+
             </tr>
             <tr>
                 <td colspan="5"></td>
                 <td>
-                    <button type="button" class="btn btn-primary btn-lg" (click)="finalizarCompra()">Realizar Pedido</button>
+
                 </td>
             </tr>
             <br>
@@ -89,5 +92,26 @@
             </tr>
         </tbody>
     </table>
+    <div style="display: flex; padding:10px;">
+        <h3>Elegir dirección del pedido: </h3>
+        <div *ngFor="let item2 of data" style="margin-left: 100px;">
+            <h5>País: {{item2.country}}, Ciudad: {{item2.city}}, Calle: {{item2.road}}</h5>
+        </div>
+        
+    </div>
+
+    <div class="map-container">
+        <div class="map-frame">
+            <div id="map"></div>
+        </div>
+        <div style="margin-top: 20px;float: right;">
+            <button type="button" class="btn btn-primary btn-lg" (click)="agregarPedidoFinal()">Realizar Pedido</button>
+        </div>
+        <div *ngIf="imprimir">
+            <div style="margin-top: 20px; margin-right: 20px; float: right;">
+                <button type="button" class="btn btn-success btn-lg" click="window.print();" >Imprimir Factura</button>
+            </div>
+        </div>
+    </div>
     <br>
 </div>

@@ -1,0 +1,106 @@
+<app-navbar></app-navbar>
+
+<div class="container" id="pedidos">
+    <h3>Detalle del Pedido</h3>
+
+    <div class="table-responsive" *ngFor="let item of pedidos">
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr style="text-align: center;">
+                    <th scope="col" colspan="4">DetallePedido</th>
+                </tr>
+            </thead>
+            <tbody id="listado">
+                <tr>
+                    <th class="titulo">Cliente</th>
+                </tr>
+                <tr>
+                    <td>Nombre:</td>
+                    <td>{{item.nombre}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Apellido:</td>
+                    <td>{{item.apellido}}</td>
+                </tr>
+                <tr>
+                    <td>Telefono:</td>
+                    <td>{{item.telefono}}</td>
+                </tr>
+
+                <tr>
+                    <th colspan="4" class="titulo">Pedido</th>
+                </tr>
+                <tr>
+                    <td>Total a cobrar:</td>
+                    <td>$ {{item.total}}</td>
+                </tr>
+                <tr>
+                    <table class="table" id="detalle" style="text-align: center;margin-left: 150px;">
+                        <thead class="thead-dark">
+                            <tr style="text-align: center;">
+                                <th>Producto</th>
+                                <th>Nombre</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of item.productos">
+                            <tr style="align-items: center;">
+                                <td> <img src="{{item.imagen}}" alt="" id="imagen"> </td>
+                                <td>{{item.cantidad}}</td>
+                                <td>{{item.nombre}}</td>
+                                <td>$ {{item.precio}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<!-- mapa -->
+<style>
+    #pedidos {
+        margin-top: 120px;
+    }
+
+    #detalle {
+        margin-left: 50px;
+    }
+
+    .titulo {
+        font-size: large;
+    }
+
+    #imagen {
+        width: 100px;
+        height: 100px;
+    }
+
+    #mapa {
+        margin-left: 430px;
+        width: 1100px;
+    }
+
+    #titulos {
+        margin-top: 10px;
+        margin-left: 320px;
+        margin-bottom: 20px;
+    }
+
+    #sinPedidos {
+        margin-top: 80px;
+        margin-left: 40px;
+    }
+
+    #botonP {
+        width: 500px;
+        margin-left: 300px;
+    }
+</style>
+<app-footer></app-footer>

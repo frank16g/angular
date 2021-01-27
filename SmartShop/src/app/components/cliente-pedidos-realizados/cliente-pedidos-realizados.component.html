@@ -4,8 +4,8 @@
         <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <td colspan="6" style="text-align: center;">
-                        <h1 id="nuevoPedido">PRODUCTOS</h1>
+                    <td colspan="6" style="text-align: left;">
+                        <h1 id="nuevoPedido">Pedidos</h1>
                     </td>
                 </tr>
             </thead>
@@ -16,59 +16,42 @@
                             <tr>
                                 <th></th>
                                 <th scope="col">#</th>
-                                <th scope="col">Producto</th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Subtotal</th>
-                                <th scope="col">IVA</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Repartidor</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Detalle</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody *ngFor="let item of pedidos ; let i = index">
                             <tr>
+                                <td></td>
                                 <td>
-                                    
+                                    {{i+1}}
+                                </td>
+                                <td>
+                                    {{item.estado}}
+                                </td>
+                                <td>
+                                    {{item.fecha}}
+                                </td>
+                                <td>
+                                    <div *ngIf="item.id_repartidor=='null';else elsenuevo">
+                                        <p>No asignado</p>
+                                    </div>
+                                    <ng-template #elsenuevo>
+                                        Asignado
+                                    </ng-template>
+                                </td>
+                                <td>
+                                    {{formateaValor(item.total)}}
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" [routerLink]="['/cliente-pedidorealizado-detalle',item.id]"> Ver detalle</button>
                                 </td>
                             </tr>
                         </tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Subtotal : </td>
-                            <td></td>
-
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Total IVA : </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Suma de IVA : </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>TOTAL : </td>
-                            <td></td>
-                        </tr>
                     </table>
-                </tr>
-                <tr>
-                    <td colspan="5"></td>
-                    <td>
-                        <button type="button" class="btn btn-secondary btn-lg">Realizar Pedido</button>
-                    </td>
-                </tr>
-                <br>
-                <tr>
-                    <td></td>
                 </tr>
             </tbody>
         </table>

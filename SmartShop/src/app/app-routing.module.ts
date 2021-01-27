@@ -17,6 +17,7 @@ import { from } from 'rxjs';
 import { AdminEditarRepartidorComponent } from './components/admin-editar-repartidor/admin-editar-repartidor.component'
 import { ClienteCantidadProductoComponent } from './components/cliente-cantidad-producto/cliente-cantidad-producto.component'
 import { ClienteCarritoComponent } from './components/cliente-carrito/cliente-carrito.component'
+import { ClientePedidosRealizadosDetalleComponent} from './components/cliente-pedidos-realizados-detalle/cliente-pedidos-realizados-detalle.component'
 const routes: Routes = [
   { path: 'login', loadChildren: () => import('./auth/login/login.module').then(m => m.LoginModule) },
   { path: 'register', loadChildren: () => import('./auth/register/register.module').then(m => m.RegisterModule) },
@@ -88,6 +89,10 @@ const routes: Routes = [
   {
     path: 'cliente-carrito',
     component: ClienteCarritoComponent
+  },
+  {
+    path: 'cliente-pedidorealizado-detalle/:id',
+    component: ClientePedidosRealizadosDetalleComponent
   }
 ];
 

@@ -35,6 +35,7 @@ import { AdminEditarProductoComponent } from './components/admin-editar-producto
 import { ClienteCantidadProductoComponent } from './components/cliente-cantidad-producto/cliente-cantidad-producto.component';
 import { ChartsModule } from 'ng2-charts';
 import { ClienteCarritoComponent } from './components/cliente-carrito/cliente-carrito.component';
+import { ClientePedidosRealizadosDetalleComponent } from './components/cliente-pedidos-realizados-detalle/cliente-pedidos-realizados-detalle.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { ClienteCarritoComponent } from './components/cliente-carrito/cliente-ca
     AdminEditarRepartidorComponent,
     AdminEditarProductoComponent,
     ClienteCantidadProductoComponent,
-    ClienteCarritoComponent
+    ClienteCarritoComponent,
+    ClientePedidosRealizadosDetalleComponent
 
   ],
   imports: [

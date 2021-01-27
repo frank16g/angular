@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FirebaseServiceService } from '../../services/firebase-service.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../auth/services/auth.service';
@@ -6,6 +6,8 @@ import { CarritoService } from '../../services/carrito.service';
 import { from, Observable } from 'rxjs';
 import { Producto } from '../../models/producto.model';
 import { stringify } from '@angular/compiler/src/util';
+import * as L from 'leaflet';
+import { ServiceMapService } from '../../services/service-map.service';
 // import { firestore } from 'firebase-admin';
 
 @Component({
@@ -13,17 +15,22 @@ import { stringify } from '@angular/compiler/src/util';
   templateUrl: './cliente-carrito.component.html',
   styleUrls: ['./cliente-carrito.component.scss']
 })
-export class ClienteCarritoComponent implements OnInit {
+export class ClienteCarritoComponent implements OnInit, AfterViewInit {
   listaProductosSeleccionados: Producto[] = [];
   listaProductosNoRepetidos: Producto[] = [];
   total = 0;
   subtotal = 0;
   iva = 0;
   correoCliente;
+  latitud: any;
+  longi: any;
+  data: any;
+  imprimir: boolean = false;
   constructor(
     private firebaseServiceService: FirebaseServiceService,
     private auth: AuthService,
-    private carritoService: CarritoService
+    private carritoService: CarritoService,
+    private serviceMapService: ServiceMapService
   ) {
     this.carritoService.carrito$.subscribe(products => {
       console.log(products);
@@ -34,16 +41,54 @@ export class ClienteCarritoComponent implements OnInit {
   public user$: Observable<any> = this.auth.afAuth.user;
   public user: any;
   public isLogged = false;
-  idDelPedido= "p";
+  idDelPedido = "p";
 
   async ngOnInit() {
     this.correoCliente = (await this.auth.GetCurrentUser()).email;
     this.obtenerUsuario(this.correoCliente);
     this.listaProductosNoRepetidos = this.productosNoRepetidos(this.listaProductosSeleccionados);
     this.contabilizarProductos();
-
+    this.metodoFinal();
     console.log(this.listaProductosNoRepetidos, this.listaProductosSeleccionados);
     this.calcularTotales();
+  }
+  cliente: any;
+
+  pedido: any = {
+    fecha: '', id_cliente: '', id_repartidor: '', estado: '', productos: this.listaProductosSeleccionados, total: '',
+    lat: '', lon: ''
+  };
+
+
+  metodoFinal() {
+    this.firebaseServiceService.metodo(this.correoCliente).subscribe(resp => {
+      this.cliente = resp;
+
+    });
+  }
+
+  agregarPedidoFinal() {
+    //console.log(this.cliente);
+    var mensaje;
+    var opcion = confirm("Confirmar Pedido?");
+    if (opcion == true) {
+      var f = new Date();
+      this.pedido = {
+        id_cliente: this.cliente[0].id,
+        id_repartidor: 'null',
+        fecha: f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear(),
+        estado: "no entregado",
+        productos: this.listaProductosNoRepetidos,
+        total: this.total,
+        lat: this.latitud,
+        lon: this.longi
+      }
+      console.log(this.pedido);
+      this.firebaseServiceService.createPedido(this.pedido);
+      this.imprimir = true;
+    } else {
+      mensaje = "Has clickado Cancelar";
+    }
   }
 
 
@@ -129,13 +174,13 @@ export class ClienteCarritoComponent implements OnInit {
 
   // finalizar compra
   listaPedidos = [];
-  veces =0;
+  veces = 0;
   finalizarCompra() {
-    if(this.veces == 0){
+    if (this.veces == 0) {
       this.crearPedido();
       //this.crearDetalle();
     }
-    
+
   }
 
   crearPedido() {
@@ -192,39 +237,53 @@ export class ClienteCarritoComponent implements OnInit {
           });
         });
       });
-        let longitud = this.listaPedidos.length; // tamaño del arreglo pedidos
-        let Pedido: { // crear obejeto pedido
-          id_pedido: number,
-          id_cliente: string,
-          id_repartidor: string,
-          fecha: string,
-          total: number,
-          lat: string,
-          lon: string,
-          estado: string
-        }
-        Pedido = { // asignar pedido 
-          id_pedido: 1,
-          id_cliente: Usuario.id,
-          id_repartidor: "null",
-          fecha: f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear(),
-          total: this.total,
-          lat: Usuario.lat,
-          lon: Usuario.lon,
-          estado: "no entregado"
-        }
+      // colecion pedido di
+      // detalle id_perpedido
+      let longitud = this.listaPedidos.length; // tamaño del arreglo pedidos
+      let Pedido: { // crear obejeto pedido
+        id_pedido: number,
+        id_cliente: string,
+        id_repartidor: string,
+        fecha: string,
+        total: number,
+        lat: string,
+        lon: string,
+        estado: string
+      }
+      Pedido = { // asignar pedido 
+        id_pedido: 1,
+        id_cliente: Usuario.id,
+        id_repartidor: "null",
+        fecha: f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear(),
+        total: this.total,
+        lat: Usuario.lat,
+        lon: Usuario.lon,
+        estado: "no entregado"
+      }
 
-        if(this.idDelPedido="p"){
-          this.idDelPedido="ss";
-          this.firebaseServiceService.createPedido(Pedido).then(res => {
-          }).catch(error => {
-            console.log(error);
-          });
-        }
-        
-        console.log(this.idDelPedido);
-        console.log(Pedido);
-      });
+      if (this.idDelPedido = "p") {
+        this.idDelPedido = "ss";
+        this.firebaseServiceService.createPedido(Pedido).then(res => {
+        }).catch(error => {
+          console.log(error);
+        });
+      }
+
+      console.log(this.idDelPedido);
+      console.log(Pedido);
+    });
+  }
+
+
+  alerta() {
+    var mensaje;
+    var opcion = confirm("Clicka en Aceptar o Cancelar");
+    if (opcion == true) {
+      mensaje = "Has clickado OK";
+    } else {
+      mensaje = "Has clickado Cancelar";
+    }
+    console.log(mensaje);
   }
 
   crearDetalle() {
@@ -258,9 +317,52 @@ export class ClienteCarritoComponent implements OnInit {
       });
     });
   }
+  ngAfterViewInit(): void {
+    this.initMap();
+
+  }
+  private initMap(): void {
+    let iconMarkerDr = L.icon({
+      iconUrl: './assets/mark.png',
+      iconSize: [60, 60],
+      iconAnchor: [30, 60]
+    })
+
+    let myMap = L.map('map').setView([-1.2490800, -78.6167500], 13)
+    var marker = L.marker([-1.2490800, -78.6167500], { icon: iconMarkerDr }).addTo(myMap);
+
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+    }).addTo(myMap);
+    myMap.on('click', e => {
+      let latLng = myMap.mouseEventToLatLng((e as L.LeafletMouseEvent).originalEvent);
+      marker.setLatLng([latLng.lat, latLng.lng]);
+      this.latitud = latLng.lat;
+      this.longi = latLng.lng;
+      this.data = this.serviceMapService.getServicesMap(latLng.lat, latLng.lng);
+    })
+    myMap.doubleClickZoom.disable();
+  }
 }
 
 /*
+
+
+let iconMarkerDr = L.icon({
+              iconUrl: './assets/mark.png',
+              iconSize: [60, 60],
+              iconAnchor: [30, 60]
+              })
+              let myMap = L.map('map').setView([c.payload.doc.data()['lat'], c.payload.doc.data()['lon']], 15)
+              var marker = L.marker([c.payload.doc.data()['lat'], c.payload.doc.data()['lon']], {icon: iconMarkerDr}).addTo(myMap);
+              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              maxZoom: 18,
+            }).addTo(myMap);
+            myMap.doubleClickZoom.disable();
+          });
+
+
 
 
     let usuario={};

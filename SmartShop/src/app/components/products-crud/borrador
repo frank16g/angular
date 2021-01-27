@@ -1,0 +1,302 @@
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AuthService } from '../../auth/services/auth.service';
+import {FirebaseServiceService} from '../../services/firebase-service.service';
+import {Router} from '@angular/router';
+import { element } from 'protractor';
+import { stringify } from '@angular/compiler/src/util';
+@Component({
+  selector: 'app-repartidor-pedidos-realizados',
+  templateUrl: './repartidor-pedidos-realizados.component.html',
+  styleUrls: ['./repartidor-pedidos-realizados.component.scss']
+})
+export class RepartidorPedidosRealizadosComponent implements OnInit {
+
+  constructor(
+    private authSvc: AuthService, private router: Router ,
+  private firebaseServiceService:FirebaseServiceService
+  ) { }
+  coleccionUsuarios:any[]=[];
+  coleccionPedidos:any[]=[];
+  coleccionClientes:any[]=[];
+  coleccionRepartidorPedidosRealizados:any[]=[];
+  Cliente:any[]=[];
+  correoRepartidor;
+  
+  usuario;
+    public user$:Observable<any>=this.authSvc.afAuth.user;
+  async ngOnInit() {
+    this.correoRepartidor=(await this.authSvc.GetCurrentUser()).email;
+
+   
+    this.idRepartidor(this.correoRepartidor);
+  }
+  idRepartidor(correo){
+    this.firebaseServiceService.getRepartidores().subscribe(re=>{
+      re.forEach((re:any)=>{
+        this.coleccionUsuarios.push(
+          {
+            id:re.payload.doc.id,
+            correo:re.payload.doc.data()['email'],
+            nombre:re.payload.doc.data()['nombre']
+          }
+        )
+      });
+      //console.log(this.coleccionUsuarios)
+      let Repartidor = {
+        id:String,
+        correo:String,
+        nombre:String
+      }
+      this.coleccionUsuarios.forEach(usuario => {
+        if(usuario.correo==correo){
+          Repartidor.id=usuario.id,
+          Repartidor.nombre=usuario.nombre,
+          Repartidor.correo=usuario.correo
+        }
+      });
+      //console.log(Repartidor)
+
+      this.firebaseServiceService.getPedidos().subscribe(pedido=>{
+        pedido.forEach(p=>{
+          this.coleccionPedidos.push({
+            id:p.payload.doc.id,
+            id_cliente:p.payload.doc.data()['id_cliente'],
+            id_repartidor:p.payload.doc.data()['id_repartidor'],
+            total:p.payload.doc.data()['total'],
+            
+            estado:p.payload.doc.data()['estado'],
+            fecha:p.payload.doc.data()['fecha'],
+            lat:p.payload.doc.data()['lat'],
+            lon:p.payload.doc.data()['lon'],
+            productos:p.payload.doc.data()['productos']
+          });
+        });
+
+        this.firebaseServiceService.getUsuarios().subscribe(cliente=>{
+          cliente.forEach(c=>{
+            this.coleccionClientes.push({
+              id:c.payload.doc.id,
+              nombre:c.payload.doc.data()['nombre']
+            })
+          });
+          this.coleccionClientes.forEach(cliente=>{
+            this.coleccionPedidos.forEach(pedido => {
+              if(pedido.id_repartidor==Repartidor.id && pedido.id_cliente==cliente.id && pedido.estado=="entregado"){
+                
+                this.coleccionRepartidorPedidosRealizados.push({
+                  id:pedido.id,
+                  id_cliente:pedido.id_cliente,
+                  id_repartidor:pedido.id_repartidor,
+                  total:pedido.total,
+                  //ubicacion:pedido.ubicacion,
+                  lat:pedido.lat,
+                  lon:pedido.lon,
+                  productos:pedido.productos,
+                  estado:pedido.estado,
+                  fecha:pedido.fecha,
+                  nombre:cliente.nombre
+                });
+              }
+            });
+          })
+          
+          
+        });//fin clientes
+        
+        //console.log(this.coleccionPedidos);
+        
+        
+       //console.log(this.coleccionRepartidorPedidosRealizados)
+
+      });//fin get pedidos
+    });//fin get repartidores
+    
+  }
+
+  // obtenerUsuario(correo) {
+  //   //
+  //   this.firebaseServiceService.getRepartidorCorreo().subscribe(resp => {
+  //     this.coleccionUsuarios.length = 0;
+  //     resp.forEach((e: any) => {
+  //       this.coleccionUsuarios.push({
+  //         id: e.payload.doc.id,
+  //         correo: e.payload.doc.data()['email']
+  //       });
+  //     })
+  //     //console.log(this.coleccionUsuarios);
+  //     this.coleccionUsuarios.forEach((e) => {
+  //       if (e.correo == correo) {
+  //         this.usuario = {
+  //           id: e.id,
+  //           correo: e.correo
+  //         }
+  //       }
+  //     });
+  //      console.log(this.usuario.id);
+  //      //console.log('---------//////-/-/-//-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/')
+  //       this.firebaseServiceService.getPedidos().subscribe(data=>{
+  //       //this.coleccionRepartidorPedidos.length=0;
+  //       this.coleccionRepartidorPedidos = data.map(e=>{
+  //           return{
+  //             id: e.payload.doc.id,
+  //             estado: e.payload.doc.data()['estado'],
+  //             fecha: e.payload.doc.data()['fecha'],
+  //             id_cliente: e.payload.doc.data()['id_cliente'],
+  //             id_repartidor: e.payload.doc.data()['id_repartidor'],
+  //             total: e.payload.doc.data()['total'],
+  //             ubicacion: e.payload.doc.data()['ubicacion']
+  //           }
+  //       });
+  //       //
+  //       //console.log("//////////////////////////////////////////////////////////////")
+  //       this.firebaseServiceService.getUsuarios().subscribe(c=>{
+  //         this.Cliente=c.map(c=>{
+  //           return{
+  //             id: c.payload.doc.id,
+  //             nombre:c.payload.doc.data()['nombre']
+  //           }
+  //         });
+  //         //console.log(this.Cliente)
+          
+  //         this.Cliente.forEach(element => {
+  //           this.coleccionRepartidorPedidos.forEach(p=>{
+  //             if(p.id_cliente==element.id   && p.estado=="entragado" && p.id_repartidor==this.usuario.id){
+  //               console.log("---------")
+  //               this.coleccionRepartidorPedidosRealizados.push({
+  //                 id:p.id,
+  //                 estado:p.estado,
+  //                 fecha:p.fecha,
+  //                 id_repartidor:p.id_repartidor,
+  //                 id_cliente:p.id_cliente,
+  //                 total:p.total,
+  //                 ubicacion: p.ubicacion,
+  //                 nombre:element.nombre
+                  
+  //               });
+                
+  //             }
+  //             console.log(this.coleccionRepartidorPedidosRealizados)
+  //           })
+  //           //console.log(this.Cliente)
+  //         });
+  //       });
+  //     //});
+  //   });
+  //   });
+  }
+ 
+  // pedidosGet(){
+  //   this.firebaseServiceService.getPedidos().subscribe(data=>{
+  //     this.coleccionRepartidorPedidos.length=0;
+  //     this.coleccionRepartidorPedidos = data.map(e=>{
+  //         return{
+  //           id: e.payload.doc.id,
+  //           estado: e.payload.doc.data()['estado'],
+  //           fecha: e.payload.doc.data()['fecha'],
+  //           id_cliente: e.payload.doc.data()['id_cliente'],
+  //           id_repartidor: e.payload.doc.data()['id_repartidor'],
+  //           total: e.payload.doc.data()['total'],
+  //           ubicacion: e.payload.doc.data()['ubicacion']
+  //         }
+  //     });
+  //     //
+  //     console.log("//////////////////////////////////////////////////////////////")
+  //     this.firebaseServiceService.getUsuarios().subscribe(c=>{
+  //       this.Cliente=c.map(c=>{
+  //         return{
+  //           id: c.payload.doc.id,
+  //           nombre:c.payload.doc.data()['nombre']
+  //         }
+  //       });
+  //       //console.log(this.Cliente)
+        
+  //       this.Cliente.forEach(element => {
+  //         this.coleccionRepartidorPedidos.forEach(p=>{
+  //           if(p.id_cliente==element.id && p.id_repartidor !="null"){
+  //             console.log(element,p)
+  //             this.coleccionRepartidorPedidosRealizados.push({
+  //               id:p.id,
+  //               estado:p.estado,
+  //               fecha:p.fecha,
+  //               id_repartidor:p.id_repartidor,
+  //               id_cliente:p.id_cliente,
+  //               total:p.total,
+  //               ubicacion: p.ubicacion,
+  //               nombre:element.nombre
+                
+  //             });
+              
+  //           }
+  //           console.log(this.coleccionRepartidorPedidosRealizados)
+  //         })
+  //         //console.log(this.Cliente)
+  //       });
+  //     });
+  // }); 
+  // }
+
+ // obtenerUsuario(correo) {
+  //   //5
+  //   this.firebaseServiceService.getClienteCorreo().subscribe(re=>{
+  //     this.coleccionUsuarios.length=0;
+  //     re.forEach((e:any)=>{
+  //       this.coleccionUsuarios.push({
+  //         id: e.payload.doc.id,
+  //         correo: e.payload.doc.data()['email']
+  //       })
+  //     });
+  //     this.coleccionUsuarios.forEach((e)=>{
+  //       if(e.correo==correo){
+  //         this.usuario={
+  //           id: e.id,
+  //           correo: e.correo
+  //         }
+  //       }
+  //     })
+  //     this.firebaseServiceService.getUsuarios().subscribe(c=>{
+  //       this.Cliente=c.map(c=>{
+  //         return{
+  //           id: c.payload.doc.id,
+  //         nombre:c.payload.doc.data()['nombre']
+  //         }
+  //       })
+  //     });
+  //     this.firebaseServiceService.getPedidos().subscribe(resp=>{
+  //       this.coleccionRepartidorPedidos.length=0;
+  //       resp.forEach((e:any)=>{
+  //         this.coleccionRepartidorPedidos.push({
+  //           id:e.payload.doc.id,
+  //           estado:e.payload.doc.data()['estado'],
+  //           fecha:e.payload.doc.data()['fecha'],
+  //           id_cliente:e.payload.doc.data()['id_cliente'],
+  //           id_repartidor:e.payload.doc.data()['id_repartidor'],
+  //           total:e.payload.doc.data()['total'],
+  //           ubicacion:e.payload.doc.data()['ubicacion']
+  //         })
+  //       })
+  //       console.log(this.coleccionRepartidorPedidos)
+        
+  //         this.Cliente.forEach(element=>{
+  //           this.Cliente.length=0;
+  //           console.log(this.Cliente)
+  //           this.coleccionRepartidorPedidos.forEach(p=>{
+  //             if(p.id_cliente==element.id && p.id_repartidor ==correo){
+  //               this.coleccionRepartidorPedidosRealizados.push({
+  //                 id:p.id,
+  //               estado:p.estado,
+  //               fecha:p.fecha,
+  //               id_repartidor:p.id_repartidor,
+  //               id_cliente:p.id_cliente,
+  //               total:p.total,
+  //               ubicacion: p.ubicacion,
+  //               nombre:element.nombre
+  //               })
+  //             }
+  //           })
+  //           console.log(this.coleccionRepartidorPedidosRealizados)
+  //         })
+  //       });
+  //     });
+    
+  // }
