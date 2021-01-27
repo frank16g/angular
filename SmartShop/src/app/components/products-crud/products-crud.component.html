@@ -14,9 +14,48 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-3" *ngFor="let item of arregloProductoPorCategoria; let i = index">
-            <div class="card" *ngIf="!item['editar']">
-                <div class="card-body">
+        <div class="col-md-3" *ngFor="let item of arregloProductoPorCategoria; let i = index" style="margin-bottom: 25px;">
+            <div  *ngIf="!item['editar']">
+                <div class="card" style="width: 14rem;" id="demo">
+                    <img class="card-img-top" src="{{item.imagen}}" alt="{{item.nombre}}" style="height: 150px;">
+                    <div class="card-body">
+                        <strong>Nombre: </strong>
+                        <p class="card-text">{{item.nombre}}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong class="card-title">Categoria: </strong>
+                            <br>
+                            {{item.categoria}}
+                        </li>
+                        <li class="list-group-item"><strong>Precio: </strong> {{item.precio}}</li>  
+                    </ul>
+                    <div class="card-body">
+                        <button class="btn btn-primary" [routerLink]="['/editar-producto',item.id]"> Editar</button>
+                        <button class="btn btn-danger" (click)="EliminarProducto(item.id)">Eliminar</button>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    #p {
+        margin-top: 90px;
+    }
+    #demo {
+        -webkit-box-shadow: 8px 2px 21px 0px rgba(0, 0, 0, 0.63);
+        box-shadow: 8px 2px 21px 0px rgba(0, 0, 0, 0.63);
+    }
+
+</style>
+<app-footer></app-footer>
+
+<!-- 
+
+
+  <div class="card-body">
                     <div class="card-title">
                         Categoría: {{item.categoria}}
                     </div>
@@ -34,18 +73,18 @@
                         <button class="btn btn-danger" (click)="EliminarProducto(item.id)">Eliminar</button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<style>
-    #p {
-        margin-top: 90px;
-    }
-</style>
-<app-footer></app-footer>
 
-<!-- 
+
+
+
+
+
+
+
+
+
+
+
 
     <ng-template #elseblock>
                 <div class="card">

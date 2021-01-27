@@ -1,0 +1,93 @@
+<app-navbar></app-navbar>
+<br><br><br><br>
+<div class="container">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <td colspan="6" style="text-align: center;">
+                    <h1 id="nuevoPedido">PRODUCTOS</h1>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th></th>
+                            <th scope="col">#</th>
+                            <th scope="col">Producto</th>
+                            <th scope="col">PVP</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Subtotal</th>
+                            <th scope="col">IVA</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of listaProductosNoRepetidos; let i = index">
+                        <tr>
+                            <td></td>
+                            <td>
+                                {{i+1}}
+                            </td>
+                            <td>
+                                {{item.nombre}}
+                            </td>
+                            <td>
+                                $ {{item.precio}}
+                            </td>
+                            <td>
+                                {{item.cantidad}}
+                            </td>
+                            <td>
+                                $ {{formateaValor(item.precio*item.cantidad)}}
+                            </td>
+                            <td>
+                                {{item.categoria}}
+                            </td>
+                        </tr>
+                    </tbody>
+                   <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Total IVA: </td>
+                        <td >$ {{formateaValor(iva)}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Subtotal: </td>
+                        <td>$ {{formateaValor(subtotal)}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>TOTAL: </td>
+                        <td>$ {{formateaValor(total)}}</td>
+                    </tr>
+                   </tfoot>
+                </table>
+            </tr>
+            <tr>
+                <td colspan="5"></td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-lg" (click)="finalizarCompra()">Realizar Pedido</button>
+                </td>
+            </tr>
+            <br>
+            <tr>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+</div>

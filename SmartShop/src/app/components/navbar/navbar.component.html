@@ -10,9 +10,6 @@
             <a class="nav-link" routerLink="/cliente" routerLinkActive="active">Productos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/pedidosRealizados" routerLinkActive="active">Carrito</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" routerLink="/cliente" routerLinkActive="active">Pedidos Realizados</a>
           </li>
           <li class="nav-item">
@@ -20,10 +17,25 @@
           </li>
         </ul>
       </div>
+      <div class="carrito" style="margin-left: 10px;">
+        <button routerLink="/cliente-carrito"><img class="img-fluid" src="./assets/carros.png" alt="" style="width: 25px;"/>
+        </button>
+        <span class="dot">
+          {{total}}</span>
+      </div>
     </div>
   </nav>
   <style>
     #btnSalir{
       padding-top: 5px;
     }
+    
+    .dot {
+      height: 25px;
+      width: 25px;
+      background-color: #bbb;
+      border-radius: 50%;
+      text-align: center;
+      display: inline-block;
+  }
   </style>

@@ -16,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavbarLoginComponent } from './auth/navbar-login/navbar-login.component';
 import { ProductsComponent } from './components/products/products.component';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { ProductsCrudComponent } from './components/products-crud/products-crud.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
@@ -32,6 +34,7 @@ import { AdminEditarRepartidorComponent } from './components/admin-editar-repart
 import { AdminEditarProductoComponent } from './components/admin-editar-producto/admin-editar-producto.component';
 import { ClienteCantidadProductoComponent } from './components/cliente-cantidad-producto/cliente-cantidad-producto.component';
 import { ChartsModule } from 'ng2-charts';
+import { ClienteCarritoComponent } from './components/cliente-carrito/cliente-carrito.component';
 
 @NgModule({
   declarations: [
@@ -57,13 +60,14 @@ import { ChartsModule } from 'ng2-charts';
     AdminCrearRepartidorComponent,
     AdminEditarRepartidorComponent,
     AdminEditarProductoComponent,
-    ClienteCantidadProductoComponent
+    ClienteCantidadProductoComponent,
+    ClienteCarritoComponent
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     HttpClientModule,
     ChartsModule,

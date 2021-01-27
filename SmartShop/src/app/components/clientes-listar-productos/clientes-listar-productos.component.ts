@@ -1,8 +1,12 @@
 import { Component, OnInit, ElementRef, ViewChild, } from '@angular/core';
 import { FirebaseServiceService } from '../../services/firebase-service.service';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../auth/services/auth.service';
 import { finalize } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
+import { CarritoService } from '../../services/carrito.service';
+import { Producto } from '../../models/producto.model';
+
 @Component({
   selector: 'app-clientes-listar-productos',
   templateUrl: './clientes-listar-productos.component.html',
@@ -10,17 +14,43 @@ import { Observable } from 'rxjs';
 })
 export class ClientesListarProductosComponent implements OnInit {
 
+  total = 0;
+  listaProductosSeleccionados: Producto[] = [];
+  listaProductosSeleccionadosUnicos: Producto[] = [];
   constructor(
     private firebaseServiceService: FirebaseServiceService,
-    private auth: AuthService
-  ) { }
+    private auth: AuthService,
+    private carritoService: CarritoService
+  ) {
+    this.carritoService.carrito$.subscribe(products => {
+      console.log(products);
+      this.total = products.length;
+      this.listaProductosSeleccionados = products;
+    });
+
+  }
+
+
+  cantidadForm = new FormGroup({
+    cantidad: new FormControl(''),
+    producto: new FormControl('')
+  })
+
+  public user$: Observable<any> = this.auth.afAuth.user;
+  public user: any;
+  public isLogged = false;
+
+  Cantidad: 0;
 
   cantidadProducto: string;
 
+  correoCliente;
+
   collectionProductos = []; //Lista de todos los Productos
-  listaProductosCompra: any[] = [];
+  listaProductosCompra: [];
+  productoCompra: {};
   // Meetodo-boton Agregar Al Carrito 
-  AgregarAlCarriro(_producto) {
+  seleccionar(_producto) {
     _producto.agregar = true;
     // crea el objeto
   }
@@ -35,9 +65,13 @@ export class ClientesListarProductosComponent implements OnInit {
   categoriaEditar: string;   // obtener categoria para editar
 
 
-
   a: number;
-  ngOnInit() {
+  async ngOnInit() {
+    this.user = await this.auth.GetCurrentUser();
+    if (this.user) {
+      this.isLogged = true;
+    }
+    console.log(this.correoCliente);
     //this.arregloProductoPorCategoria.length = 0;
     // llenar el objeto producto con los productos de la BD 
     this.cargarTodosLosProductos();
@@ -46,6 +80,87 @@ export class ClientesListarProductosComponent implements OnInit {
     //this.arregloProductoPorCategoria.length = 0;
     // llanar el objeto categoria de los elementos de la BD
     this.cargarListaCategorias();
+    this.correoCliente = (await this.auth.GetCurrentUser()).email;
+    //console.log(this.correoCliente);
+    this.obtenerUsuario(this.correoCliente);
+  }
+
+
+  productoSeleccionado: {};
+
+  //Metodo de agregar productos al carrito
+  AgregarAlCarrito(_producto) {
+    this.carritoService.addCarrito(_producto);
+    this.listaProductosSeleccionadosUnicos = this.limpiarProductosRepetidos(this.listaProductosSeleccionados);
+    this.contabilizarProductos();
+  }
+
+  EliminarDelCarrito(_producto) {
+    this.carritoService.deleteCarrito(_producto);
+    this.listaProductosSeleccionadosUnicos = this.limpiarProductosRepetidos(this.listaProductosSeleccionados);
+    this.contabilizarProductos();
+  }
+
+  limpiarProductosRepetidos(arr: Producto[]) {
+    const nuevoarreglo = [];
+    arr.forEach(element => {
+      if (!nuevoarreglo.includes(element)) {
+        nuevoarreglo.push(element);
+      }
+    });
+    return nuevoarreglo;
+  }
+
+
+  contabilizarProductos() {
+    this.listaProductosSeleccionadosUnicos.forEach(e => {
+      let contador = 0;
+      this.listaProductosSeleccionados.forEach(sub => {
+        if (e.id == sub.id) {
+          contador = contador + 1;
+        }
+      });
+      e.cantidad = contador;
+    });
+  }
+
+
+  // AumentarCantidad(id){
+  //   this.arregloProductoPorCategoria.forEach(e=>{
+  //     if(e.id==id){
+  //       if(e.cantidad==0){
+  //         e.cantidad=1;
+  //       }else{
+  //         e.cantidad=e.cantidad+1;
+  //       }
+  //     }
+  //     // console.log(e.cantidad);
+  //   }); 
+  // }
+
+
+  coleccionUsuarios: any[] = [];
+  usuario: {};
+  obtenerUsuario(correo) {
+    this.firebaseServiceService.getClienteCorreo().subscribe(resp => {
+      this.coleccionUsuarios.length = 0;
+      resp.forEach((e: any) => {
+        this.coleccionUsuarios.push({
+          id: e.payload.doc.id,
+          correo: e.payload.doc.data()['email']
+        });
+      })
+      console.log(this.coleccionUsuarios);
+      this.coleccionUsuarios.forEach((e) => {
+        if (e.correo == correo) {
+          this.usuario = {
+            id: e.id,
+            correo: e.correo
+          }
+        }
+      });
+      console.log(this.usuario);
+    });
   }
 
   cargarTodosLosProductos() {
@@ -58,6 +173,7 @@ export class ClientesListarProductosComponent implements OnInit {
           categoria: element.payload.doc.data().categoria,
           precio: element.payload.doc.data().precio,
           imagen: element.payload.doc.data().imagen,
+          cantidad: 0,
           agregar: false
         });
       });
@@ -78,6 +194,7 @@ export class ClientesListarProductosComponent implements OnInit {
           categoria: element.payload.doc.data().categoria,
           precio: element.payload.doc.data().precio,
           imagen: element.payload.doc.data().imagen,
+          cantidad: 0,
           agregar: false
         });
       });
@@ -114,7 +231,7 @@ export class ClientesListarProductosComponent implements OnInit {
     });
   }
 
-  
+
   //******* capturar categorias de los combos*********
   // obtener categoria y buscar categorias
   obtenerCategoriaBuscar(e) {
@@ -178,4 +295,44 @@ let Producto = {
     _producto.imagen = 0;
     _producto.nombre = 0;
     _producto.precio = 0;
+
+
+
+
+
+
+
+
+
+
+ let p={
+      id:_producto.id,
+      nombre:_producto.nombre,
+      imagen:_producto.imagen,
+      precio:_producto.precio,
+      categoria:_producto.categoria,
+      cant:1
+    }
+    if(this.listaProductosSeleccionados.length==0){
+      this.listaProductosSeleccionados.push(p);
+    }else{
+      let flat=false;
+      this.listaProductosSeleccionados.forEach(e=>{
+        if(e.id == _producto.id){
+          //sumar cantidad
+          flat = true;
+          //sumo
+          e.cant=e.cant+1;
+          this.AumentarCantidad(e.id);
+        }
+      });
+      if(!flat){
+        //añadir producto
+      this.listaProductosSeleccionados.push(p);
+      }
+    }
+
+
+
+
 */

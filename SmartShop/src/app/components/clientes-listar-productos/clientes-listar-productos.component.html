@@ -6,19 +6,17 @@
                 <h1>Listado Productos</h1>
                 <div>
                     <label for="website">Buscar producto por Categoria:</label>
-                    <select class="form-control"  (change)="obtenerCategoriaBuscar($event)" style="width: 200px;">
+                    <select class="form-control" (change)="obtenerCategoriaBuscar($event)" style="width: 200px;">
                         <option>Todas</option>
                         <option *ngFor="let c of categoria">{{c.tipo}}</option>
                     </select>
                 </div>
             </div>
-            <div style="float: right;">
-                <button>Carrito</button>
-            </div>
+            <!-- {{user$ | async |json}} -->
         </div>
-       
-        <div class="col-md-3" *ngFor="let item of arregloProductoPorCategoria let i = index">
-            <div *ngIf="!item.agregar; else elseblock">
+        <div class="col-md-3" *ngFor="let item of arregloProductoPorCategoria let i = index"
+            style="margin-bottom: 25px;">
+            <div *ngIf="!item.agregar;">
                 <div class="card" style="width: 14rem;" id="demo">
                     <img class="card-img-top" src="{{item.imagen}}" alt="{{item.nombre}}" style="height: 150px;">
                     <div class="card-body">
@@ -31,16 +29,26 @@
                             <br>
                             {{item.categoria}}
                         </li>
-                        <li class="list-group-item"><strong>Precio: </strong> {{item.precio}}</li>  
+                        <li class="list-group-item"><strong>Precio: $</strong> {{item.precio}}</li>
                     </ul>
-                    <div class="card-body">
-                        <button type="button" class="btn btn-primary" (click)="AgregarAlCarriro(item)" style="width: 100%;">
-                            Selecccionar
+                    <div class="card-body" style="display: flex;">
+                        <button type="button" class="btn btn-primary" style="margin-right: 10px;"
+                            (click)="AgregarAlCarrito(item)">
+                            +
                         </button>
+                        <div *ngFor="let item2 of listaProductosSeleccionadosUnicos">
+                            <div *ngIf="item2.id==item.id" style="display: flex;">
+
+                                <p style="margin-left:5%; margin-right: 5%;">{{item2.cantidad}}</p>
+                                <button type="button" class="btn btn-danger" (click)="EliminarDelCarrito(item)">
+                                    -
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <ng-template #elseblock>
+            <!-- <ng-template #elseblock>
                 <div class="card" style="width: 14rem;" id="demo">
                     <img class="card-img-top" src="{{item.imagen}}" alt="{{item.nombre}}" style="height: 150px;">
                     <div class="card-body">
@@ -53,12 +61,9 @@
                             {{item.categoria}}
                         </li>
                         <li class="list-group-item"><strong>Precio: </strong>{{item.precio}}</li>  
-                        <li class="list-group-item"><strong>Cantidad: </strong>
-                            <input type="number" class="form-control" [[ngModel]]="Cantidad">
-                        </li>  
                     </ul>
-                    <div class="card-body">
-                        <button type="button" class="btn btn-primary" style="margin-right: 10px;">
+                     <div class="card-body">
+                        <button type="button" class="btn btn-primary" style="margin-right: 10px;" (click)="AgregarAlCarrito(item)">
                             Agregar
                         </button>
                         <button type="button" class="btn btn-danger" (click)="item.agregar=false">
@@ -66,8 +71,8 @@
                         </button>
                     </div>
                 </div>
-            </ng-template>
-            
+            </ng-template> -->
+
         </div>
     </div>
 </div>
@@ -80,5 +85,14 @@
     #demo {
         -webkit-box-shadow: 8px 2px 21px 0px rgba(0, 0, 0, 0.63);
         box-shadow: 8px 2px 21px 0px rgba(0, 0, 0, 0.63);
+    }
+
+    .dot {
+        height: 25px;
+        width: 25px;
+        background-color: #bbb;
+        border-radius: 50%;
+        text-align: center;
+        display: inline-block;
     }
 </style>

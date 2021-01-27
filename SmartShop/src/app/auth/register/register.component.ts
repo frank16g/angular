@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import {FormGroup, FormControl} from '@angular/forms';
 import { AuthService } from './../services/auth.service';
 import {Router} from '@angular/router';
-import { User } from '../../models/user';
+import { User } from '../../models/user.model';
 import { FirebaseServiceService} from '../../services/firebase-service.service';
 import  * as L from 'leaflet';
 import { ServiceMapService } from '../../services/service-map.service';

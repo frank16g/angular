@@ -79,10 +79,22 @@ export class FirebaseServiceService {
     getRepartidorId(id:any){
        return this.firestore.collection('Repartidores').doc(id).snapshotChanges();
     }
-    // Metodo para crear Pedido(){
-    createPedido(_pedido:any){
+
+    // Metodo Para Obtener Un clientes
+    getClienteCorreo(){
+      return this.firestore.collection('Usuarios').snapshotChanges();
+    }
+
+    createPedido(_pedido){
+      // idcliente
+      // el id_repartidos null
       return this.firestore.collection('Pedidos').add(_pedido);
     }
 
-
+    // crear detalle pedido
+    createDetallePedido(_detalle){
+      // idcliente
+      // el id_repartidos null
+      return this.firestore.collection('DetallePedidos').add(_detalle);
+    }
 }
